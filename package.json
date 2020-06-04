@@ -1,0 +1,33 @@
+{
+  "name": "liken",
+  "version": "1.0.0",
+  "description": "ERC-721 implementation",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.0",
+    "truffle-assertions": "^0.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LorranSutter/ERC-721.git"
+  },
+  "keywords": [
+    "Solidity",
+    "Truffle",
+    "Ethereum",
+    "ERC-721"
+  ],
+  "author": "Lorran Sutter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LorranSutter/ERC-721/issues"
+  },
+  "homepage": "https://github.com/LorranSutter/ERC-721#readme"
+}

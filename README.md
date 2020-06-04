@@ -4,7 +4,7 @@ ERC-721 token implementation using Solidity and Truffle presented as final assin
 ## :book: References
 
 - [ERC-721](http://erc721.org/)
-- [ERC-721 EIP](https://github.com/0xcert/ethereum-erc721/blob/master/src/contracts/tokens/nf-token.sol)
+- [0xcert reference implementation](https://github.com/0xcert/ethereum-erc721)
 
 ## :computer: Technologies
 
