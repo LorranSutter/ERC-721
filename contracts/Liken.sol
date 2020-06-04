@@ -11,7 +11,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
     address private owner;
     string private _name;
     string private _symbol;
-    uint256 private _totalSupply;
+    uint256 private _currentToken;
 
     mapping(uint256 => address) private _idToOwner;
     mapping(address => uint256) private _ownerToLikenTokenCount;
@@ -31,7 +31,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
         owner = msg.sender;
         _name = name;
         _symbol = symbol;
-        _totalSupply = 0;
+        _currentToken = 0;
     }
 
     function name() public override view returns (string memory) {
@@ -43,7 +43,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
     }
 
     function totalSupply() public override view returns (uint256) {
-        return _totalSupply;
+        return _currentToken;
     }
 
     function balanceOf(address _owner) public override view returns (uint256) {
@@ -56,19 +56,22 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
         return _owner;
     }
 
-    function mint(address _to, uint256 _tokenId) public onlyOwner {
+    function mint(address _to) public onlyOwner {
         require(_to != address(0), "Invalid address");
-        require(
-            _idToOwner[_tokenId] == address(0),
-            "Liken token already exists"
-        );
 
-        _addNFToken(_to, _tokenId);
+        uint256 tokenId = _generateNextToken();
+        _addLikenToken(_to, tokenId);
+        _currentToken++;
 
-        emit Transfer(address(0), _to, _tokenId);
+        emit Transfer(address(0), _to, _currentToken);
     }
 
-    function _addNFToken(address _to, uint256 _tokenId) internal {
+    function _generateNextToken() internal view returns (uint256) {
+        require(_currentToken + 1 > 0, "Max number of tokens reached");
+        return _currentToken + 1;
+    }
+
+    function _addLikenToken(address _to, uint256 _tokenId) internal {
         require(
             _idToOwner[_tokenId] == address(0),
             "Liken token already exists"
@@ -78,7 +81,6 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
             "Overflow"
         );
 
-        _totalSupply++;
         _idToOwner[_tokenId] = _to;
         _ownerToLikenTokenCount[_to]++;
     }

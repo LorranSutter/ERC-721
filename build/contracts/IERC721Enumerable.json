@@ -26,14 +26,14 @@
     "absolutePath": "/C/ERC-721/contracts/IERC721Enumerable.sol",
     "exportedSymbols": {
       "IERC721Enumerable": [
-        47
+        54
       ]
     },
-    "id": 48,
+    "id": 55,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 41,
+        "id": 48,
         "literals": [
           "solidity",
           "^",
@@ -50,9 +50,9 @@
         "contractKind": "interface",
         "documentation": "@title ERC-721 Non-Fungible Token Standard, optional enumeration extension\n @dev See https://eips.ethereum.org/EIPS/eip-721\n  Note: the ERC-165 identifier for this interface is 0x780e9d63.",
         "fullyImplemented": false,
-        "id": 47,
+        "id": 54,
         "linearizedBaseContracts": [
-          47
+          54
         ],
         "name": "IERC721Enumerable",
         "nodeType": "ContractDefinition",
@@ -61,7 +61,7 @@
             "body": null,
             "documentation": "@notice Count NFTs tracked by this contract\n @return A count of valid NFTs tracked by this contract, where each one of\n  them has an assigned and queryable owner not equal to the zero address",
             "functionSelector": "18160ddd",
-            "id": 46,
+            "id": 53,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -69,22 +69,22 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 42,
+              "id": 49,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "555:2:1"
             },
             "returnParameters": {
-              "id": 45,
+              "id": 52,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44,
+                  "id": 51,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 46,
+                  "scope": 53,
                   "src": "581:7:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -93,7 +93,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 43,
+                    "id": 50,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "581:7:1",
@@ -108,14 +108,14 @@
               ],
               "src": "580:9:1"
             },
-            "scope": 47,
+            "scope": 54,
             "src": "535:55:1",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 48,
+        "scope": 55,
         "src": "283:1226:1"
       }
     ],
@@ -125,14 +125,14 @@
     "absolutePath": "/C/ERC-721/contracts/IERC721Enumerable.sol",
     "exportedSymbols": {
       "IERC721Enumerable": [
-        47
+        54
       ]
     },
-    "id": 48,
+    "id": 55,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 41,
+        "id": 48,
         "literals": [
           "solidity",
           "^",
@@ -149,9 +149,9 @@
         "contractKind": "interface",
         "documentation": "@title ERC-721 Non-Fungible Token Standard, optional enumeration extension\n @dev See https://eips.ethereum.org/EIPS/eip-721\n  Note: the ERC-165 identifier for this interface is 0x780e9d63.",
         "fullyImplemented": false,
-        "id": 47,
+        "id": 54,
         "linearizedBaseContracts": [
-          47
+          54
         ],
         "name": "IERC721Enumerable",
         "nodeType": "ContractDefinition",
@@ -160,7 +160,7 @@
             "body": null,
             "documentation": "@notice Count NFTs tracked by this contract\n @return A count of valid NFTs tracked by this contract, where each one of\n  them has an assigned and queryable owner not equal to the zero address",
             "functionSelector": "18160ddd",
-            "id": 46,
+            "id": 53,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -168,22 +168,22 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 42,
+              "id": 49,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "555:2:1"
             },
             "returnParameters": {
-              "id": 45,
+              "id": 52,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44,
+                  "id": 51,
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 46,
+                  "scope": 53,
                   "src": "581:7:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -192,7 +192,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 43,
+                    "id": 50,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "581:7:1",
@@ -207,14 +207,14 @@
               ],
               "src": "580:9:1"
             },
-            "scope": 47,
+            "scope": 54,
             "src": "535:55:1",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 48,
+        "scope": 55,
         "src": "283:1226:1"
       }
     ],
@@ -226,7 +226,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-06-03T22:00:13.590Z",
+  "updatedAt": "2020-06-04T15:24:27.279Z",
   "devdoc": {
     "details": "See https://eips.ethereum.org/EIPS/eip-721  Note: the ERC-165 identifier for this interface is 0x780e9d63.",
     "methods": {},
