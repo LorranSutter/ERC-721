@@ -33,14 +33,14 @@ contract("Liken", (accounts) => {
         );
     })
 
-    it.only('returns correct balanceOf', async () => {
+    it('returns correct balanceOf', async () => {
         let count = await likenInstance.balanceOf(user01);
         count = web3.utils.toBN(count);
         assert.equal(new BigNumber(count), 0, "Initial balance should be 0");
 
-        const tx = await likenInstance.mint(user01, token01, { from: creator });
+        const tx1 = await likenInstance.mint(user01, token01, { from: creator });
 
-        truffleAssert.eventEmitted(tx, "Transfer", (obj) => {
+        truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
             return (
                 obj._from === addressZero &&
                 obj._to === user01 &&
@@ -52,9 +52,9 @@ contract("Liken", (accounts) => {
         count = web3.utils.toBN(count);
         assert.equal(new BigNumber(count), 1, "Current balance should be 1");
 
-        await likenInstance.mint(user01, token02, { from: creator });
+        const tx2 = await likenInstance.mint(user01, token02, { from: creator });
 
-        truffleAssert.eventEmitted(tx, "Transfer", (obj) => {
+        truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
             return (
                 obj._from === addressZero &&
                 obj._to === user01 &&
