@@ -10,3 +10,5 @@ ERC-721 token implementation using Solidity and Truffle presented as final assin
 
 - [Solidity](https://solidity.readthedocs.io/)
 - [Truffle](https://www.trufflesuite.com/)
+
+<!-- Data is not stored in the chain. Liken is sort of a authorization and authentication token -->

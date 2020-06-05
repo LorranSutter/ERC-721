@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LorranSutter/ERC-721.git"
+    "url": "git+https://github.com/LorranSutter/Liken.git"
   },
   "keywords": [
     "Solidity",
@@ -27,7 +27,7 @@
   "author": "Lorran Sutter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/LorranSutter/ERC-721/issues"
+    "url": "https://github.com/LorranSutter/Liken/issues"
   },
-  "homepage": "https://github.com/LorranSutter/ERC-721#readme"
+  "homepage": "https://github.com/LorranSutter/Liken#readme"
 }
