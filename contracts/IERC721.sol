@@ -31,11 +31,11 @@ interface IERC721 {
 
     /// @dev This emits when an operator is enabled or disabled for an owner.
     ///  The operator can manage all NFTs of the owner.
-    // event ApprovalForAll(
-    //     address indexed _owner,
-    //     address indexed _operator,
-    //     bool _approved
-    // );
+    event ApprovalForAll(
+        address indexed _owner,
+        address indexed _operator,
+        bool _approved
+    );
 
     /// @notice Count all NFTs assigned to an owner
     /// @dev NFTs assigned to the zero address are considered invalid, and this
@@ -92,11 +92,11 @@ interface IERC721 {
     /// @param _from The current owner of the NFT
     /// @param _to The new owner
     /// @param _tokenId The NFT to transfer
-    // function transferFrom(
-    //     address _from,
-    //     address _to,
-    //     uint256 _tokenId
-    // ) external payable;
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) external payable;
 
     /// @notice Set or reaffirm the approved address for an NFT
     /// @dev The zero address indicates there is no approved address.
@@ -112,22 +112,22 @@ interface IERC721 {
     ///  multiple operators per owner.
     /// @param _operator Address to add to the set of authorized operators.
     /// @param _approved True if the operator is approved, false to revoke approval
-    // function setApprovalForAll(address _operator, bool _approved) external;
+    function setApprovalForAll(address _operator, bool _approved) external;
 
     /// @notice Get the approved address for a single NFT
     /// @dev Throws if `_tokenId` is not a valid NFT
     /// @param _tokenId The NFT to find the approved address for
     /// @return The approved address for this NFT, or the zero address if there is none
-    // function getApproved(uint256 _tokenId) external view returns (address);
+    function getApproved(uint256 _tokenId) external view returns (address);
 
     /// @notice Query if an address is an authorized operator for another address
     /// @param _owner The address that owns the NFTs
     /// @param _operator The address that acts on behalf of the owner
     /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
-    // function isApprovedForAll(address _owner, address _operator)
-    //     external
-    //     view
-    //     returns (bool);
+    function isApprovedForAll(address _owner, address _operator)
+        external
+        view
+        returns (bool);
 }
 
 

@@ -20,50 +20,6 @@ contract("Liken", (accounts) => {
         likenInstance = await Liken.new("Liken", "LKN");
     });
 
-    // ------ Metadata ------ //
-    it('returns correct name and symbol', async () => {
-        const name = await likenInstance.name.call();
-        const symbol = await likenInstance.symbol.call();
-        assert.equal(name, tokenNameExpected, "Token is not as expected");
-        assert.equal(
-            symbol,
-            tokenSymbolExpected,
-            "Token symbol is not as expected"
-        );
-    });
-
-    // ------ Enumerable ------ //
-    it('returns correct token by index', async () => {
-        const tx1 = await likenInstance.mint(user01, { from: creator });
-
-        truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
-            return (
-                obj._from === addressZero &&
-                obj._to === user01 &&
-                new BigNumber(1).isEqualTo(obj._tokenId)
-            );
-        }, `Transfer event to mint token 1 failed`);
-
-        let tokenId = await likenInstance.tokenByIndex(0);
-        tokenId = web3.utils.toBN(tokenId);
-        assert.equal(new BigNumber(tokenId), 1, "Token should be 1 for index 0");
-
-        const tx2 = await likenInstance.mint(user01, { from: creator });
-
-        truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
-            return (
-                obj._from === addressZero &&
-                obj._to === user01 &&
-                new BigNumber(2).isEqualTo(obj._tokenId)
-            );
-        }, `Transfer event to mint token 2 failed`);
-
-        tokenId = await likenInstance.tokenByIndex(1);
-        tokenId = web3.utils.toBN(tokenId);
-        assert.equal(new BigNumber(tokenId), 2, "Token should be 2 for index 1");
-    });
-
-
     it('returns correct balanceOf', async () => {
         let count = await likenInstance.balanceOf(user01);
         count = web3.utils.toBN(count);
@@ -77,7 +33,7 @@ contract("Liken", (accounts) => {
                 obj._to === user01 &&
                 new BigNumber(1).isEqualTo(obj._tokenId)
             );
-        }, `Transfer event to mint token 1 failed`);
+        }, `Transfer event of mint token 1 failed`);
 
         count = await likenInstance.balanceOf(user01);
         count = web3.utils.toBN(count);
@@ -91,15 +47,11 @@ contract("Liken", (accounts) => {
                 obj._to === user01 &&
                 new BigNumber(2).isEqualTo(obj._tokenId)
             );
-        }, `Transfer event to mint token 2 failed`);
+        }, `Transfer event of mint token 2 failed`);
 
         count = await likenInstance.balanceOf(user01);
         count = web3.utils.toBN(count);
         assert.equal(new BigNumber(count), 2, "Current balance should be 2");
-
-        count = await likenInstance.totalSupply();
-        count = web3.utils.toBN(count);
-        assert.equal(new BigNumber(count), 2, "Current total supply should be 2");
     });
 
     it('returns correct ownerOf', async () => {
@@ -108,7 +60,7 @@ contract("Liken", (accounts) => {
         assert.equal(count, 1, "Current balance should be 1");
 
         let ownerAddress = await likenInstance.ownerOf(1);
-        assert.equal(ownerAddress, user01, `Owner should be ${user01}`)
+        assert.equal(ownerAddress, user01, `Owner should be ${user01}`);
     });
 
     it('approve spender', async () => {
@@ -120,7 +72,7 @@ contract("Liken", (accounts) => {
                 obj._to === user01 &&
                 new BigNumber(1).isEqualTo(obj._tokenId)
             );
-        }, `Transfer event to mint token 1 failed`);
+        }, `Transfer event of mint token 1 failed`);
 
         const tx2 = await likenInstance.approve(user02, 1, { from: user01 });
 
@@ -131,5 +83,69 @@ contract("Liken", (accounts) => {
                 new BigNumber(1).isEqualTo(obj._tokenId)
             );
         }, `Approval event to approve token 1 from ${user01} to ${user02} failed`);
+
+        const approvedSpenderAddress = await likenInstance.getApproved(1);
+        assert.equal(approvedSpenderAddress, user02, `Approved address should be ${user02}`);
+    });
+
+    it('approve operator', async () => {
+        const tx1 = await likenInstance.mint(user01, { from: creator });
+
+        truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
+            return (
+                obj._from === addressZero &&
+                obj._to === user01 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of mint token 1 failed`);
+
+        const tx2 = await likenInstance.setApprovalForAll(user02, true, { from: user01 });
+
+        truffleAssert.eventEmitted(tx2, "ApprovalForAll", (obj) => {
+            return (
+                obj._owner === user01 &&
+                obj._operator === user02 &&
+                obj._approved === true
+            );
+        }, `Approval for all event of setApprovalForAll from ${user01} to ${user02} failed`);
+
+        const isApproved = await likenInstance.isApprovedForAll(user01, user02);
+        assert.equal(isApproved, true, `${user01} should have approved ${user02} as operator`);
+    });
+
+    it('transfers from one account to another', async () => {
+        const tx1 = await likenInstance.mint(user01, { from: creator });
+
+        truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
+            return (
+                obj._from === addressZero &&
+                obj._to === user01 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of mint token 1 failed`);
+
+        let ownerAddress = await likenInstance.ownerOf(1);
+        assert.equal(ownerAddress, user01, `Owner should be ${user01}`);
+
+        const tx2 = await likenInstance.transferFrom(user01, user02, 1, { from: user01 });
+
+        truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
+            return (
+                obj._from === user01 &&
+                obj._to === user02 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of transferFrom token 1 failed`);
+
+        ownerAddress = await likenInstance.ownerOf(1);
+        assert.equal(ownerAddress, user02, `Owner should be ${user02}`);
+
+        let count = await likenInstance.balanceOf(user01);
+        count = web3.utils.toBN(count);
+        assert.equal(new BigNumber(count), 0, `Balance of ${user01} should be 0`);
+
+        count = await likenInstance.balanceOf(user02);
+        count = web3.utils.toBN(count);
+        assert.equal(new BigNumber(count), 1, `Balance of ${user02} should be 1`);
     });
 });
