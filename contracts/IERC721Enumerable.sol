@@ -18,7 +18,7 @@ interface IERC721Enumerable {
     /// @param _index A counter less than `totalSupply()`
     /// @return The token identifier for the `_index`th NFT,
     ///  (sort order not specified)
-    // function tokenByIndex(uint256 _index) external view returns (uint256);
+    function tokenByIndex(uint256 _index) external view returns (uint256);
 
     /// @notice Enumerate NFTs assigned to an owner
     /// @dev Throws if `_index` >= `balanceOf(_owner)` or if
