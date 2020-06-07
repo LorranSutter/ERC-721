@@ -2,9 +2,9 @@
 
 pragma solidity ^0.6.0;
 
-import "./IERC721.sol";
-import "./IERC721Metadata.sol";
-import "./IERC721Enumerable.sol";
+import "./Interfaces/IERC721.sol";
+import "./Interfaces/IERC721Metadata.sol";
+import "./Interfaces/IERC721Enumerable.sol";
 
 
 contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
