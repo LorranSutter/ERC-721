@@ -8,9 +8,13 @@
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
-    "truffle-assertions": "^0.9.2"
+    "ethers": "^4.0.47",
+    "truffle-assertions": "^0.9.2",
+    "truffle-hdwallet-provider": "^1.0.17"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
   "scripts": {
     "test": "truffle test"
   },
