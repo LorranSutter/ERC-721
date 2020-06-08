@@ -11,18 +11,11 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
     address private owner;
     string private _name;
     string private _symbol;
-    uint256 private currentToken; // FIXME Do I need this?
+    uint256 private currentToken;
 
     uint256[] internal allTokens;
 
-    // Mapping from owner to list of owned token IDs
-    // mapping(address => uint256[]) internal ownerToTokens; // FIXME DO I need this?
     mapping(uint256 => address) private tokenToOwner;
-
-    // Mapping from token ID to index of the owner tokens list
-    // mapping(uint256 => uint256) internal ownerToTokensIndex;
-    //Mapping from token id to position in the allTokens array
-    // mapping(uint256 => uint256) internal allTokensIndex;
 
     mapping(address => uint256) private ownerToTokensCount;
     mapping(uint256 => address) internal tokenToApproval;
@@ -132,8 +125,6 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
         canOperate(_tokenId)
         validToken(_tokenId)
     {
-        // allowed[msg.sender][_approved] = _value;
-
         address tokenOwnerAddress = tokenToOwner[_tokenId];
         require(
             _approved != tokenOwnerAddress,
