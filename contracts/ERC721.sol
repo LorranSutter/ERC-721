@@ -7,7 +7,7 @@ import "./Interfaces/IERC721Metadata.sol";
 import "./Interfaces/IERC721Enumerable.sol";
 
 
-contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
+contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
     address private owner;
     string private _name;
     string private _symbol;
@@ -51,13 +51,13 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
 
     modifier onlyOwner() {
         if (msg.sender != owner) {
-            revert("Liken: not current owner");
+            revert("ERC721: not current owner");
         }
         _;
     }
 
     modifier validToken(uint256 _tokenId) {
-        require(tokenToOwner[_tokenId] != address(0), "Liken: token not valid");
+        require(tokenToOwner[_tokenId] != address(0), "ERC721: token not valid");
         _;
     }
 
@@ -66,7 +66,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
         require(
             tokenOwner == msg.sender ||
                 ownerToOperators[tokenOwner][msg.sender],
-            "Liken: not owner or operator"
+            "ERC721: not owner or operator"
         );
         _;
     }
@@ -77,7 +77,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
             tokenOwner == msg.sender ||
                 tokenToApproval[_tokenId] == msg.sender ||
                 ownerToOperators[tokenOwner][msg.sender],
-            "Liken: not owner, approved or operator"
+            "ERC721: not owner, approved or operator"
         );
         _;
     }
@@ -109,7 +109,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
         view
         returns (uint256)
     {
-        require(_index < allTokens.length, "Liken: invalid index");
+        require(_index < allTokens.length, "ERC721: invalid index");
         return allTokens[_index];
     }
 
@@ -120,7 +120,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
 
     function ownerOf(uint256 _tokenId) public override view returns (address) {
         address _owner = tokenToOwner[_tokenId];
-        require(_owner != address(0), "Liken: invalid Liken token");
+        require(_owner != address(0), "ERC721: invalid ERC721 token");
         return _owner;
     }
 
@@ -144,7 +144,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
         address tokenOwnerAddress = tokenToOwner[_tokenId];
         require(
             _approved != tokenOwnerAddress,
-            "Liken: approval to current owner"
+            "ERC721: approval to current owner"
         );
 
         _approve(tokenOwnerAddress, _approved, _tokenId);
@@ -179,7 +179,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
 
     // ------ Functions not in the interfaces ------ //
     function mint(address _to) public onlyOwner {
-        require(_to != address(0), "Liken: invalid address");
+        require(_to != address(0), "ERC721: invalid address");
 
         uint256 tokenId = _generateNextToken();
         _addToken(_to, tokenId);
@@ -190,18 +190,18 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
 
     // ------ Internal functions ------ //
     function _generateNextToken() internal view returns (uint256) {
-        require(currentToken + 1 > 0, "Liken: max number of tokens reached");
+        require(currentToken + 1 > 0, "ERC721: max number of tokens reached");
         return currentToken + 1;
     }
 
     function _addToken(address _to, uint256 _tokenId) internal {
         require(
             tokenToOwner[_tokenId] == address(0),
-            "Liken: token already exists"
+            "ERC721: token already exists"
         );
         require(
             ownerToTokensCount[_to] + 1 > ownerToTokensCount[_to],
-            "Liken: overflow"
+            "ERC721: overflow"
         );
 
         allTokens.push(_tokenId);
@@ -225,9 +225,9 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
     ) internal validToken(_tokenId) {
         require(
             ownerOf(_tokenId) == _from,
-            "Liken: transfer of token that is not own"
+            "ERC721: transfer of token that is not own"
         );
-        require(_to != address(0), "Liken: Transfer to the zero address");
+        require(_to != address(0), "ERC721: Transfer to the zero address");
 
         _clearApproval(_tokenId);
 
@@ -238,7 +238,7 @@ contract Liken is IERC721, IERC721Metadata, IERC721Enumerable {
     }
 
     function _removeToken(address _from, uint256 _tokenId) internal {
-        require(tokenToOwner[_tokenId] == _from, "Liken: not owner");
+        require(tokenToOwner[_tokenId] == _from, "ERC721: not owner");
         ownerToTokensCount[_from] = ownerToTokensCount[_from] - 1;
         delete tokenToOwner[_tokenId];
     }

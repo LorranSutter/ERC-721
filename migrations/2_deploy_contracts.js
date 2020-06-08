@@ -1,5 +1,5 @@
-const Liken = artifacts.require("Liken");
+const ERC721 = artifacts.require("ERC721");
 
 module.exports = function (deployer) {
-    deployer.deploy(Liken, "Liken", "LKN");
+    deployer.deploy(ERC721, "Liken", "LKN");
 };

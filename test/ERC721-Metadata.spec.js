@@ -1,13 +1,13 @@
-const Liken = artifacts.require("Liken");
+const ERC721 = artifacts.require("ERC721");
 
-contract("Liken Metadata", () => {
+contract("ERC721 Metadata", () => {
     const tokenNameExpected = "Liken";
     const tokenSymbolExpected = "LKN";
     let likenInstance;
 
     // Deploy a new contract before each test to prevent one test from interfering with the other
     beforeEach(async () => {
-        likenInstance = await Liken.new("Liken", "LKN");
+        likenInstance = await ERC721.new("Liken", "LKN");
     });
 
     it('returns correct name and symbol', async () => {

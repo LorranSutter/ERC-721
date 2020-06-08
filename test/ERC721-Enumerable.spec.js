@@ -1,8 +1,8 @@
 const BigNumber = require("bignumber.js");
 const truffleAssert = require("truffle-assertions");
-const Liken = artifacts.require("Liken");
+const ERC721 = artifacts.require("ERC721");
 
-contract("Liken Enumerable", (accounts) => {
+contract("ERC721 Enumerable", (accounts) => {
     const addressZero = "0x0000000000000000000000000000000000000000";
     const creator = accounts[0];
     const user01 = accounts[1];
@@ -10,7 +10,7 @@ contract("Liken Enumerable", (accounts) => {
 
     // Deploy a new contract before each test to prevent one test from interfering with the other
     beforeEach(async () => {
-        likenInstance = await Liken.new("Liken", "LKN");
+        likenInstance = await ERC721.new("Liken", "LKN");
     });
 
     it('returns correct totalSupply', async () => {

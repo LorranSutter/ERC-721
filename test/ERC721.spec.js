@@ -1,9 +1,9 @@
 const BigNumber = require("bignumber.js");
 const truffleAssert = require("truffle-assertions");
-const Liken = artifacts.require("Liken");
+const ERC721 = artifacts.require("ERC721");
 
-contract("Liken", (accounts) => {
-    const tokenNameExpected = "Liken";
+contract("ERC721", (accounts) => {
+    const tokenNameExpected = "ERC721";
     const tokenSymbolExpected = "LKN";
     const tokenSupplyExpected = web3.utils.toBN(10000000000000000000);
     const addressZero = "0x0000000000000000000000000000000000000000";
@@ -17,7 +17,7 @@ contract("Liken", (accounts) => {
 
     // Deploy a new contract before each test to prevent one test from interfering with the other
     beforeEach(async () => {
-        likenInstance = await Liken.new("Liken", "LKN");
+        likenInstance = await ERC721.new("Liken", "LKN");
     });
 
     it('returns correct balanceOf', async () => {
