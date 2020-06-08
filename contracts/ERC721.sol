@@ -7,7 +7,7 @@ import "./Interfaces/IERC721Metadata.sol";
 import "./Interfaces/IERC721Enumerable.sol";
 
 
-contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
+contract ERC721 is IERC165, IERC721, IERC721Metadata, IERC721Enumerable {
     address private owner;
     string private _name;
     string private _symbol;
@@ -23,6 +23,9 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
 
     //Global variable
     mapping(address => mapping(address => uint256)) internal allowed;
+
+    // Mapping for stroing interface ids of supported interfaces
+    mapping(bytes4 => bool) private _supportedInterfaces;
 
     event Transfer(
         address indexed _from,
@@ -43,7 +46,10 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
     );
 
     modifier validToken(uint256 _tokenId) {
-        require(tokenToOwner[_tokenId] != address(0), "ERC721: token not valid");
+        require(
+            tokenToOwner[_tokenId] != address(0),
+            "ERC721: token not valid"
+        );
         _;
     }
 
@@ -73,6 +79,10 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
         _name = name;
         _symbol = symbol;
         currentToken = 0;
+        _registerInterface(0x01ffc9a7); //ERC-165
+        _registerInterface(0x80ac58cd); //ERC-721
+        _registerInterface(0x5b5e139f); //ERC-721-metadata
+        _registerInterface(0x780e9d63); //ERC-721-enumerable
     }
 
     // ------ Metadata ------ //
@@ -161,8 +171,17 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
         return ownerToOperators[_owner][_operator];
     }
 
+    function supportsInterface(bytes4 interfaceId)
+        public
+        override
+        view
+        returns (bool)
+    {
+        return _supportedInterfaces[interfaceId];
+    }
+
     // ------ Functions not in the interfaces ------ //
-    function mint(address _to) public returns(uint256) {
+    function mint(address _to) public returns (uint256) {
         require(_to != address(0), "ERC721: invalid address");
 
         uint256 tokenId = _generateNextToken();
@@ -175,6 +194,11 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
     }
 
     // ------ Internal functions ------ //
+    function _registerInterface(bytes4 interfaceId) internal {
+        require(interfaceId != 0xffffffff, "ERC721: invalid interface id");
+        _supportedInterfaces[interfaceId] = true;
+    }
+
     function _generateNextToken() internal view returns (uint256) {
         require(currentToken + 1 > 0, "ERC721: max number of tokens reached");
         return currentToken + 1;

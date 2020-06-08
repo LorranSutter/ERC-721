@@ -141,4 +141,18 @@ contract("ERC721", (accounts) => {
         count = web3.utils.toBN(count);
         assert.equal(new BigNumber(count), 1, `Balance of ${user02} should be 1`);
     });
+
+    it('supports interfaces ERC165, ERC721, ERC721-metadata, ERC721-enumerable', async () => {
+        const supports165 = await likenInstance.supportsInterface('0x01ffc9a7', { from: creator });
+        assert.equal(supports165, true, 'It does not supports ERC165 interface');
+
+        const supports721 = await likenInstance.supportsInterface('0x80ac58cd', { from: creator });
+        assert.equal(supports721, true, 'It does not supports ERC721 interface');
+
+        const supports721_meta = await likenInstance.supportsInterface('0x5b5e139f', { from: creator });
+        assert.equal(supports721_meta, true, 'It does not supports ERC721-metadata interface');
+
+        const supports721_enum = await likenInstance.supportsInterface('0x780e9d63', { from: creator });
+        assert.equal(supports721_enum, true, 'It does not supports ERC721-enumerable interface');
+    });
 });
