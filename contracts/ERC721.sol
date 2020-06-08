@@ -49,13 +49,6 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
         bool _approved
     );
 
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert("ERC721: not current owner");
-        }
-        _;
-    }
-
     modifier validToken(uint256 _tokenId) {
         require(tokenToOwner[_tokenId] != address(0), "ERC721: token not valid");
         _;
@@ -178,14 +171,16 @@ contract ERC721 is IERC721, IERC721Metadata, IERC721Enumerable {
     }
 
     // ------ Functions not in the interfaces ------ //
-    function mint(address _to) public onlyOwner {
+    function mint(address _to) public returns(uint256) {
         require(_to != address(0), "ERC721: invalid address");
 
         uint256 tokenId = _generateNextToken();
         _addToken(_to, tokenId);
         currentToken++;
 
-        emit Transfer(address(0), _to, tokenId);
+        emit Transfer(msg.sender, _to, tokenId);
+
+        return tokenId;
     }
 
     // ------ Internal functions ------ //

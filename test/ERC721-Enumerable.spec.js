@@ -18,7 +18,7 @@ contract("ERC721 Enumerable", (accounts) => {
 
         truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
             return (
-                obj._from === addressZero &&
+                obj._from === creator &&
                 obj._to === user01 &&
                 new BigNumber(1).isEqualTo(obj._tokenId)
             );
@@ -28,7 +28,7 @@ contract("ERC721 Enumerable", (accounts) => {
 
         truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
             return (
-                obj._from === addressZero &&
+                obj._from === creator &&
                 obj._to === user01 &&
                 new BigNumber(2).isEqualTo(obj._tokenId)
             );
@@ -44,7 +44,7 @@ contract("ERC721 Enumerable", (accounts) => {
 
         truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
             return (
-                obj._from === addressZero &&
+                obj._from === creator &&
                 obj._to === user01 &&
                 new BigNumber(1).isEqualTo(obj._tokenId)
             );
@@ -58,7 +58,7 @@ contract("ERC721 Enumerable", (accounts) => {
 
         truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
             return (
-                obj._from === addressZero &&
+                obj._from === creator &&
                 obj._to === user01 &&
                 new BigNumber(2).isEqualTo(obj._tokenId)
             );
