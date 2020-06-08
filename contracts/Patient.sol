@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.0;
+pragma solidity >=0.5.8 <0.7.0;
 
 import "./ERC721.sol";
 
@@ -15,7 +15,7 @@ contract Patient is ERC721("Patient", "PNT") {
         address emergencyHospital;
     }
 
-    mapping(uint256 => PatientInfo) patients;
+    mapping(uint256 => PatientInfo) public patients;
 
     modifier onlyHolder(uint256 _patientId) {
         require(

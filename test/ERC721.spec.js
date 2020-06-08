@@ -106,6 +106,41 @@ contract("ERC721", (accounts) => {
         assert.equal(isApproved, true, `${user01} should have approved ${user02} as operator`);
     });
 
+    it('safe transfer from one account to another', async () => {
+        const tx1 = await likenInstance.mint(user01, { from: creator });
+
+        truffleAssert.eventEmitted(tx1, "Transfer", (obj) => {
+            return (
+                obj._from === creator &&
+                obj._to === user01 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of mint token 1 failed`);
+
+        let ownerAddress = await likenInstance.ownerOf(1);
+        assert.equal(ownerAddress, user01, `Owner should be ${user01}`);
+
+        const tx2 = await likenInstance.safeTransferFrom(user01, user02, 1, { from: user01 });
+
+        truffleAssert.eventEmitted(tx2, "Transfer", (obj) => {
+            return (
+                obj._from === user01 &&
+                obj._to === user02 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of transferFrom token 1 failed`);
+
+        const tx3 = await likenInstance.safeTransferFrom(user02, user01, 1, '0x123456');
+
+        truffleAssert.eventEmitted(tx3, "Transfer", (obj) => {
+            return (
+                obj._from === user02 &&
+                obj._to === user01 &&
+                new BigNumber(1).isEqualTo(obj._tokenId)
+            );
+        }, `Transfer event of transferFrom token 1 failed`);
+    });
+
     it('transfers from one account to another', async () => {
         const tx1 = await likenInstance.mint(user01, { from: creator });
 

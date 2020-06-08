@@ -13,7 +13,8 @@
     "truffle-hdwallet-provider": "^1.0.17"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "solhint": "^3.0.0"
   },
   "scripts": {
     "test": "truffle test"

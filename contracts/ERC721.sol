@@ -1,13 +1,42 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.0;
+pragma solidity >=0.5.8 <0.7.0;
 
 import "./Interfaces/IERC721.sol";
 import "./Interfaces/IERC721Metadata.sol";
 import "./Interfaces/IERC721Enumerable.sol";
 
+// Based on https://github.com/0xcert/ethereum-erc721/blob/master/src/contracts/utils/address-utils.sol
+library Address {
+    /**
+     * @dev Returns whether the target address is a contract.
+     * @param _addr Address to check.
+     * @return addressCheck True if _addr is a contract, false if not.
+     */
+    function isContract(address _addr)
+        internal
+        view
+        returns (bool addressCheck)
+    {
+        // This method relies in extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+
+        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
+        // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
+        // for accounts without code, i.e. `keccak256('')`
+        bytes32 codehash;
+
+
+        bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
+        assembly { codehash := extcodehash(_addr) } // solhint-disable-line
+        addressCheck = (codehash != 0x0 && codehash != accountHash);
+    }
+}
+
 
 contract ERC721 is IERC165, IERC721, IERC721Metadata, IERC721Enumerable {
+    using Address for address;
     address private owner;
     string private _name;
     string private _symbol;
@@ -26,6 +55,8 @@ contract ERC721 is IERC165, IERC721, IERC721Metadata, IERC721Enumerable {
 
     // Mapping for stroing interface ids of supported interfaces
     mapping(bytes4 => bool) private _supportedInterfaces;
+
+    bytes4 internal constant MAGIC_ON_ERC721_RECEIVED = 0x150b7a02;
 
     event Transfer(
         address indexed _from,
@@ -118,6 +149,23 @@ contract ERC721 is IERC165, IERC721, IERC721Metadata, IERC721Enumerable {
         address _owner = tokenToOwner[_tokenId];
         require(_owner != address(0), "ERC721: invalid ERC721 token");
         return _owner;
+    }
+
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes memory data
+    ) public override payable {
+        _safeTransfer(_from, _to, _tokenId, data);
+    }
+
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) public override payable {
+        _safeTransfer(_from, _to, _tokenId, "");
     }
 
     function transferFrom(
@@ -226,6 +274,27 @@ contract ERC721 is IERC165, IERC721, IERC721Metadata, IERC721Enumerable {
     ) internal {
         tokenToApproval[_tokenId] = _to;
         emit Approval(_owner, _to, _tokenId);
+    }
+
+    function _safeTransfer(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes memory data
+    ) internal {
+        _transfer(_from, _to, _tokenId);
+        if (_to.isContract()) {
+            bytes4 retval = IERC721TokenReceiver(_to).onERC721Received(
+                msg.sender,
+                _to,
+                _tokenId,
+                data
+            );
+            require(
+                retval == MAGIC_ON_ERC721_RECEIVED,
+                "ERC721: recipient SC cannot handle ERC721 tokens"
+            );
+        }
     }
 
     function _transfer(
