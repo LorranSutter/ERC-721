@@ -2,8 +2,7 @@ const BigNumber = require("bignumber.js");
 const truffleAssert = require("truffle-assertions");
 const ERC721 = artifacts.require("ERC721");
 
-contract("ERC721 Enumerable", (accounts) => {
-    const addressZero = "0x0000000000000000000000000000000000000000";
+contract("ERC721 Enumerable", (accounts) => {    
     const creator = accounts[0];
     const user01 = accounts[1];
     let likenInstance;

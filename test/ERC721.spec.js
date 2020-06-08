@@ -3,16 +3,9 @@ const truffleAssert = require("truffle-assertions");
 const ERC721 = artifacts.require("ERC721");
 
 contract("ERC721", (accounts) => {
-    const tokenNameExpected = "ERC721";
-    const tokenSymbolExpected = "LKN";
-    const tokenSupplyExpected = web3.utils.toBN(10000000000000000000);
-    const addressZero = "0x0000000000000000000000000000000000000000";
     const creator = accounts[0];
     const user01 = accounts[1];
-    const user01Amount = web3.utils.toBN(500000000000000000);
-    const spender = accounts[2];
-    const spenderAmount = web3.utils.toBN(300000000000000000);
-    const user02 = accounts[3];
+    const user02 = accounts[2];
     let likenInstance;
 
     // Deploy a new contract before each test to prevent one test from interfering with the other
