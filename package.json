@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "solhint": "^3.0.0"
+    "solhint": "^3.0.0",
+    "solidity-coverage": "^0.7.5"
   },
   "scripts": {
     "test": "truffle test"
