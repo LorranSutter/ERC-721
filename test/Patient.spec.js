@@ -16,6 +16,25 @@ contract("Contract Test", (accounts) => {
         patientInstance = await Patient.new();
     });
 
+    it('should return correct number of registered patients', async () => {
+        let count = await patientInstance.totalPatients();
+        assert.equal(count, 0, 'Total of patients should be 0');
+
+        await patientInstance.addPatient(patientName, dateBirth, hospitalEmergency, { from: hospital1 });
+        await patientInstance.addPatient(patientName, dateBirth, hospitalEmergency, { from: hospital1 });
+        await patientInstance.addPatient(patientName, dateBirth, hospitalEmergency, { from: hospital1 });
+
+        count = await patientInstance.totalPatients();
+        assert.equal(count, 3, 'Total of patients should be 3');
+    });
+
+    it('should return correct patient holder', async () => {
+        await patientInstance.addPatient(patientName, dateBirth, hospitalEmergency, { from: hospital1 });
+
+        const holderAddress = await patientInstance.patientHolder(1);
+        assert.equal(holderAddress, hospital1, `Patient 1 holder should be ${hospital1}`);
+    });
+
     it('should add a new patient', async () => {
         const tx = await patientInstance.addPatient(patientName, dateBirth, hospitalEmergency, { from: hospital1 })
 
