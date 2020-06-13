@@ -15,10 +15,12 @@ You can check the deployed contract in Etherscan [here](https://ropsten.ethersca
 
 ## :book: References
 
-- [ERC-721](http://erc721.org/)
-- [0xcert reference implementation](https://github.com/0xcert/ethereum-erc721)
+- [ERC-721](http://erc721.org/) - non-fungible token
 
 ## :computer: Technologies
 
-- [Solidity](https://solidity.readthedocs.io/)
-- [Truffle](https://www.trufflesuite.com/)
+- [Solidity](https://solidity.readthedocs.io/) - smart contract programming language
+- [Truffle](https://www.trufflesuite.com/) - dApp environment
+
+## :cookie: Credits
+- [0xcert](https://github.com/0xcert/ethereum-erc721) - reference implementation
